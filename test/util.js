@@ -1,7 +1,6 @@
 const { assert, expect } = require('chai');
 const { loadGraph } = require('../util');
-
-const DATA = 'AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7';
+const { DATA } = require('./test-constants');
 
 describe('util', () => {
   describe('loadGraph', () => {
