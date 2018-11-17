@@ -1,4 +1,4 @@
-const { loadGraph } = require('util');
+const { loadGraph } = require('./util');
 
 module.exports = class Graph {
   constructor(data) {
