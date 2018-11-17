@@ -31,7 +31,7 @@ module.exports = class Graph {
     const map = this.adjList.get(from);
 
     if (map) {
-      return map.get(to);
+      return map.get(to) || null;
     }
 
     return null;
