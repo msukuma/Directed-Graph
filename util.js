@@ -5,7 +5,7 @@ const Edge = require('./edge');
 function loadGraph(data) {
   const adjList = new Map();
   const edges = new Set();
-  let set;
+  let map;
 
   data.split(', ')
       .forEach(edge => {
@@ -18,11 +18,12 @@ function loadGraph(data) {
         edges.add(edge);
 
         if (adjList.has(from)) {
-          adjList.get(from).add(edge);
+          map = adjList.get(from);
+          map.set(to, edge);
         } else {
-          set = new Set();
-          set.add(edge);
-          adjList.set(from, set);
+          map = new Map();
+          map.set(to, edge);
+          adjList.set(from, map);
         }
       });
 
