@@ -17,6 +17,7 @@ describe('util', () => {
     });
 
     it('returns a map that represents the data as an adjancency', () => {
+      let map, actual;
       const expected = {
         A: ['B', 'D', 'E'],
         B: ['C'],
@@ -26,12 +27,10 @@ describe('util', () => {
       };
 
       Object.entries(expected).forEach(([node, neighbors]) => {
-        const iterator = adjList.get(node).values();
-        let actual;
+        map = adjList.get(node);
 
         neighbors.forEach(expected => {
-          actual = iterator.next().value;
-          actual = actual && actual.to;
+          let actual = map.get(expected).to;
           expect(actual).to.equal(expected);
         });
       });
