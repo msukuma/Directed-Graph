@@ -25,10 +25,15 @@ describe('util', () => {
         E: ['B'],
       };
 
-      Object.entries(expected).forEach(([node, expected]) => {
-        const edgeObjs = adjList.get(node);
-        const actual = edgeObjs.map(e => e.to);
-        expect(actual).to.deep.equal(expected);
+      Object.entries(expected).forEach(([node, neighbors]) => {
+        const iterator = adjList.get(node).values();
+        let actual;
+
+        neighbors.forEach(expected => {
+          actual = iterator.next().value;
+          actual = actual && actual.to;
+          expect(actual).to.equal(expected);
+        });
       });
     });
 
