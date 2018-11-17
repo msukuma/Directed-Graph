@@ -51,11 +51,11 @@ describe('Graph', () => {
     });
 
     it('should return an edge between the frist input and the second input if one exists', () => {
-      expect(graph.getEdge('A', 'B')).to.equal(true);
+      expect(graph.getEdge('A', 'B')).to.equal(graph.adjList.get('A').get('B'));
     });
 
     it(`should return null if there's no edge between the frist input and the second input`, () => {
-      expect(graph.getEdge('A', 'C')).to.equal(false);
+      expect(graph.getEdge('A', 'C')).to.equal(null);
     });
   });
 
