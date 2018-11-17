@@ -26,4 +26,14 @@ module.exports = class Graph {
 
     return true;
   }
+
+  getEdge(from, to) {
+    const map = this.adjList.get(from);
+
+    if (map) {
+      return map.get(to);
+    }
+
+    return null;
+  }
 };

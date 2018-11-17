@@ -22,7 +22,7 @@ describe('Graph', () => {
   });
 
   describe('hasNodes', () => {
-    it('method exists', () => {
+    it('should exists', () => {
       expect(graph.hasNodes).to.be.a('function');
     });
 
@@ -42,6 +42,20 @@ describe('Graph', () => {
 
     it('return true if graph does not have all input nodes', () => {
       expect(graph.hasNodes(['A', 'B', 'F'])).to.equal(false);
+    });
+  });
+
+  describe('getEdge', () => {
+    it('should exists', () => {
+      expect(graph.getEdge).to.be.a('function');
+    });
+
+    it('should return an edge between the frist input and the second input if one exists', () => {
+      expect(graph.getEdge('A', 'B')).to.equal(true);
+    });
+
+    it(`should return null if there's no edge between the frist input and the second input`, () => {
+      expect(graph.getEdge('A', 'C')).to.equal(false);
     });
   });
 
