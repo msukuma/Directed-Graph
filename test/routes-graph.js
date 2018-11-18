@@ -51,4 +51,33 @@ describe('RoutesGraph', () => {
     });
   });
 
+  describe('numTripsWithMaxStops', () => {
+    it('should exists', () => {
+      expect(graph.numTripsWithMaxStops).to.be.a('function');
+    });
+
+    it('should have an internal version', () => {
+      expect(graph._numTripsWithMaxStops).to.be.a('function');
+    });
+
+    it('should return 2 when called with "C" and "C" and 2', () => {
+      expect(graph.numTripsWithMaxStops('C', 'C', 3)).to.equal(2);
+    });
+
+  });
+
+  describe('numTripsExactStops', () => {
+    it('should exists', () => {
+      expect(graph.numTripsExactStops).to.be.a('function');
+    });
+
+    it('should have an internal version', () => {
+      expect(graph._numTripsExactStops).to.be.a('function');
+    });
+
+    it('should return 2 when called with "A" and "C" and 2', () => {
+      expect(graph.numTripsExactStops('A', 'C', 4)).to.equal(3);
+    });
+
+  });
 });
