@@ -1,10 +1,14 @@
 const Graph = require('../graph');
+const { loadGraph } = require('../util');
 const { assert, expect } = require('chai');
 const { DATA } = require('./test-constants');
 
 describe('Graph', () => {
   let graph;
-  before(() => graph = new Graph(DATA));
+  before(() => {
+    graph = new Graph();
+    loadGraph(DATA, graph);
+  });
 
   describe('constructor', () => {
 
@@ -14,10 +18,6 @@ describe('Graph', () => {
 
     it('should create a graph with an adjList property', () => {
       expect(graph).to.have.own.property('adjList');
-    });
-
-    it('should create a graph with an edges property', () => {
-      expect(graph).to.have.own.property('edges');
     });
   });
 
@@ -51,7 +51,9 @@ describe('Graph', () => {
     });
 
     it('should return an edge between the frist input and the second input if one exists', () => {
-      expect(graph.getEdge('A', 'B')).to.equal(graph.adjList.get('A').get('B'));
+      const list = graph.adjList.get('A');
+      const edge = graph.getEdge('A', 'B');
+      expect(list.indexOf(edge)).not.to.equal(-1);
     });
 
     it(`should return null if there's no edge between the frist input and the second input`, () => {
