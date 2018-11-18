@@ -63,23 +63,66 @@ module.exports = class RoutesGraph extends Graph {
     }
   }
 
-  numTrips(from, to, maxStops) {
+  numTripsWithMaxStops(from, to, maxStops) {
     if (maxStops < 1) { return 0; }
 
-    return this._numTrips(cur, to, maxStops + 1, 0);
-  }
-  // 'A-B-D-C-E-C-F'
-  _numTrips(cur, to, maxStops, numStops) {
     let trips = 0;
-    if (cur === to) { trips++; }
+    const neighbors = this.getNeighbors(from);
+
+    for (let n of neighbors) {
+      trips += this._numTripsWithMaxStops(n, to, maxStops, 0);
+    }
+
+    return trips;
+  }
+
+  _numTripsWithMaxStops(cur, to, maxStops, numStops) {
+    let trips = 0;
+
+    if (cur === to) {
+      trips++;
+    }
 
     numStops++;
 
     if (numStops < maxStops) {
-      const neighbors = this.getNeighbors;
+      const neighbors = this.getNeighbors(cur);
 
       for (let n of neighbors) {
-        trips += this._numTrips(n, to, numStops);
+        trips += this._numTripsWithMaxStops(n, to, maxStops, numStops);
+      }
+    }
+
+    return trips;
+  }
+
+  numTripsExactStops(from, to, stops) {
+    if (stops < 1) { return 0; }
+
+    let trips = 0;
+    const neighbors = this.getNeighbors(from);
+
+    for (let n of neighbors) {
+      trips += this._numTripsExactStops(n, to, stops, 0);
+    }
+
+    return trips;
+  }
+
+  _numTripsExactStops(cur, to, stops, numStops) {
+    let trips = 0;
+
+    if (numStops === stops) {
+      if (cur === to) {
+        trips++;
+      }
+    } else {
+      numStops++;
+
+      const neighbors = this.getNeighbors(cur);
+
+      for (let n of neighbors) {
+        trips += this._numTripsExactStops(n, to, stops, numStops);
       }
     }
 
