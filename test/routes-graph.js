@@ -1,5 +1,6 @@
 const RoutesGraph = require('../routes-graph');
 const Graph = require('../graph');
+const { loadGraph } = require('../util');
 const { assert, expect } = require('chai');
 const {
   DATA,
@@ -8,10 +9,12 @@ const {
 
 describe('RoutesGraph', () => {
   let graph;
-  before(() => graph = new RoutesGraph(DATA));
+  before(() => {
+    graph = new RoutesGraph();
+    loadGraph(DATA, graph);
+  });
 
   describe('constructor', () => {
-
     it('should create a graph instance', () => {
       expect(graph).to.be.an.instanceof(Graph);
     });
@@ -75,7 +78,7 @@ describe('RoutesGraph', () => {
       expect(graph._numTripsExactStops).to.be.a('function');
     });
 
-    it('should return 2 when called with "A" and "C" and 2', () => {
+    it('should return 2 when called with "A" and "C" and 3', () => {
       expect(graph.numTripsExactStops('A', 'C', 4)).to.equal(3);
     });
 

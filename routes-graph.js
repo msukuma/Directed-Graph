@@ -39,7 +39,7 @@ module.exports = class RoutesGraph extends Graph {
     const q = [];
     const parentMap = new Map();
     const visited = new Set();
-    let cur, neighbors;
+    let cur, n, neighbors;
 
     q.push(from);
 
@@ -54,9 +54,12 @@ module.exports = class RoutesGraph extends Graph {
         visted.add(cur);
         neighbors = this.getNeighbors(cur);
 
-        for (let n of neighbors) {
-          q.push(n);
-          parentMap.set(n, cur);
+        if (neighbors) {
+          for (let i = 0; i < neighbors.length; i++) {
+            n = neighbors[i].to;
+            q.push(n);
+            parentMap.set(n, cur);
+          }
         }
 
       }
@@ -66,11 +69,14 @@ module.exports = class RoutesGraph extends Graph {
   numTripsWithMaxStops(from, to, maxStops) {
     if (maxStops < 1) { return 0; }
 
+    let n;
     let trips = 0;
     const neighbors = this.getNeighbors(from);
 
-    for (let n of neighbors) {
-      trips += this._numTripsWithMaxStops(n, to, maxStops, 0);
+    if (neighbors) {
+      for (let i = 0; i < neighbors.length; i++) {
+        trips += this._numTripsWithMaxStops(neighbors[i].to, to, maxStops, 0);
+      }
     }
 
     return trips;
@@ -88,8 +94,10 @@ module.exports = class RoutesGraph extends Graph {
     if (numStops < maxStops) {
       const neighbors = this.getNeighbors(cur);
 
-      for (let n of neighbors) {
-        trips += this._numTripsWithMaxStops(n, to, maxStops, numStops);
+      if (neighbors) {
+        for (let i = 0; i < neighbors.length; i++) {
+          trips += this._numTripsWithMaxStops(neighbors[i].to, to, maxStops, numStops);
+        }
       }
     }
 
@@ -102,8 +110,10 @@ module.exports = class RoutesGraph extends Graph {
     let trips = 0;
     const neighbors = this.getNeighbors(from);
 
-    for (let n of neighbors) {
-      trips += this._numTripsExactStops(n, to, stops, 0);
+    if (neighbors) {
+      for (let i = 0; i < neighbors.length; i++) {
+        trips += this._numTripsExactStops(neighbors[i].to, to, stops, 0);
+      }
     }
 
     return trips;
@@ -121,8 +131,10 @@ module.exports = class RoutesGraph extends Graph {
 
       const neighbors = this.getNeighbors(cur);
 
-      for (let n of neighbors) {
-        trips += this._numTripsExactStops(n, to, stops, numStops);
+      if (neighbors) {
+        for (let i = 0; i < neighbors.length; i++) {
+          trips += this._numTripsExactStops(neighbors[i].to, to, stops, numStops);
+        }
       }
     }
 
