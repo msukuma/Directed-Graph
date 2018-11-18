@@ -38,7 +38,7 @@ module.exports = class Graph {
   }
 
   getNeighbors(of) {
-    const map = this.adjList.get(from);
+    const map = this.adjList.get(of);
     if (map) return map.keys();
     return [];
   }
