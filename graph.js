@@ -1,10 +1,20 @@
-const { loadGraph } = require('./util');
+const Edge = require('./edge');
 
 module.exports = class Graph {
-  constructor(data) {
-    const { adjList, edges } = loadGraph(data);
-    this.adjList = adjList;
-    this.edges = edges;
+  constructor() {
+    this.adjList = new Map();
+  }
+
+  addEdge(from, to, distance) {
+    const edge = new Edge(from, to, distance);
+    const list = this.adjList.get(from);
+
+    if (list) {
+      list.push(edge);
+    }
+    else {
+      this.adjList.set(from, [edge]);
+    }
   }
 
   hasNodes(nodes) {
@@ -27,19 +37,20 @@ module.exports = class Graph {
     return true;
   }
 
-  getEdge(from, to) {
-    const map = this.adjList.get(from);
+  getEdge(from, to) { // can be improved with binary search and sortedlist
+    const list = this.adjList.get(from);
+    let edge;
 
-    if (map) {
-      return map.get(to) || null;
+    for (var i = 0; i < list.length; i++) {
+      edge = list[i];
+      if (edge.to === to)
+        return edge;
     }
 
     return null;
   }
 
   getNeighbors(of) {
-    const map = this.adjList.get(of);
-    if (map) return map.keys();
-    return [];
+    return this.adjList.get(of);
   }
 };
