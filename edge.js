@@ -8,4 +8,8 @@ module.exports = class Edge {
     this.to = to;
     this.distance = distance;
   }
+
+  toString() {
+    return `{ from: ${this.from} to: ${this.to} distance: ${this.distance} }`;
+  }
 };
