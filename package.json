@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha test/test.js"
   },
   "author": "Itenga aka Nixon",
   "license": "UNLICENSED",
@@ -12,5 +12,7 @@
     "chai": "^4.1.2",
     "mocha": "^5.2.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "qheap": "^1.4.0"
+  }
 }

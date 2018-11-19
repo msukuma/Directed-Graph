@@ -1,10 +1,21 @@
-const { loadGraph } = require('./util');
+const Edge = require('./edge');
 
 module.exports = class Graph {
   constructor(data) {
-    const { adjList, edges } = loadGraph(data);
-    this.adjList = adjList;
-    this.edges = edges;
+    this.adjList = new Map();
+  }
+
+  addEdge(from, to, distance) {
+    const edge = new Edge(from, to, distance);
+    let map = this.adjList.get(from);
+
+    if (map) {
+      map.set(to, edge);
+    } else {
+      map = new Map();
+      map.set(to, edge);
+      this.adjList.set(from, map);
+    }
   }
 
   hasNodes(nodes) {

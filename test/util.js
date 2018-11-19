@@ -1,19 +1,15 @@
 const { assert, expect } = require('chai');
 const { loadGraph } = require('../util');
+const Graph = require('../graph');
 const { DATA } = require('./test-constants');
 
 describe('util', () => {
   describe('loadGraph', () => {
-    let adjList, edges;
+    let graph;
 
     before(() => {
-      let obj = loadGraph(DATA);
-      adjList = obj.adjList;
-      edges = obj.edges;
-    });
-
-    it('returns an object that has a Map instance', () => {
-      expect(adjList).to.be.a('map');
+      graph = new Graph();
+      loadGraph(DATA, graph);
     });
 
     it('returns a map that represents the data as an adjancency', () => {
@@ -27,21 +23,13 @@ describe('util', () => {
       };
 
       Object.entries(expected).forEach(([node, neighbors]) => {
-        map = adjList.get(node);
+        map = graph.adjList.get(node);
 
         neighbors.forEach(expected => {
           let actual = map.get(expected).to;
           expect(actual).to.equal(expected);
         });
       });
-    });
-
-    it('returns an object that has a Set instance', () => {
-      expect(edges).to.be.a('set');
-    });
-
-    it('returns a set of size 9', () => {
-      expect(edges.size).to.equal(9);
     });
   });
 });
