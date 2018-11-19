@@ -34,35 +34,6 @@ module.exports = class RoutesGraph extends Graph {
     return dist;
   }
 
-  findRoutes(from, to, maxStops) {
-    const routes = [];
-    const q = [];
-    const parentMap = new Map();
-    const visited = new Set();
-    let cur, neighbors;
-
-    q.push(from);
-
-    while (q.length) {
-      cur = q.shift();
-
-      if (!visited.has(cur)) {
-        if (cur === to) {
-          routes.push(bluildRoute(cur, parentMap));
-        }
-
-        visted.add(cur);
-        neighbors = this.getNeighbors(cur);
-
-        for (let n of neighbors) {
-          q.push(n);
-          parentMap.set(n, cur);
-        }
-
-      }
-    }
-  }
-
   numTripsWithMaxStops(from, to, maxStops) {
     if (maxStops < 1) { return 0; }
 

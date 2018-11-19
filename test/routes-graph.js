@@ -1,5 +1,9 @@
 const RoutesGraph = require('../routes-graph');
 const Graph = require('../graph');
+const {
+  loadGraph,
+  loadGraphAsync,
+} = require('../util');
 const { assert, expect } = require('chai');
 const {
   DATA,
@@ -8,7 +12,10 @@ const {
 
 describe('RoutesGraph', () => {
   let graph;
-  before(() => graph = new RoutesGraph(DATA));
+  before(() => {
+    graph = new RoutesGraph();
+    loadGraph(DATA, graph);
+  });
 
   describe('constructor', () => {
 
