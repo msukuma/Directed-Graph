@@ -1,7 +1,10 @@
 const Graph = require('../graph');
 const { loadGraph } = require('../util');
 const { assert, expect } = require('chai');
-const { DATA } = require('./test-constants');
+const {
+  DATA,
+  A, B, C, D, E, F
+} = require('./test-constants');
 
 describe('Graph', () => {
   let graph;
@@ -27,16 +30,16 @@ describe('Graph', () => {
     });
 
     it('validates input is an Array of 1 char strings', () => {
-      const badCall = () => graph.hasNodes(['A', 'B', {}]);
+      const badCall = () => graph.hasNodes([A, B, {}]);
       expect(badCall).to.throw('string');
     });
 
     it('return true if graph has all input nodes', () => {
-      expect(graph.hasNodes(['A', 'B', 'C'])).to.equal(true);
+      expect(graph.hasNodes([A, B, C])).to.equal(true);
     });
 
     it('return true if graph does not have all input nodes', () => {
-      expect(graph.hasNodes(['A', 'B', 'F'])).to.equal(false);
+      expect(graph.hasNodes([A, B, F])).to.equal(false);
     });
   });
 
@@ -46,11 +49,11 @@ describe('Graph', () => {
     });
 
     it('should return an edge between the frist input and the second input if one exists', () => {
-      expect(graph.getEdge('A', 'B')).to.equal(graph.adjList.get('A').get('B'));
+      expect(graph.getEdge(A, B)).to.equal(graph.adjList.get(A).get(B));
     });
 
     it(`should return null if there's no edge between the frist input and the second input`, () => {
-      expect(graph.getEdge('A', 'C')).to.equal(null);
+      expect(graph.getEdge(A, C)).to.equal(null);
     });
   });
 
