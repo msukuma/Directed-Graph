@@ -1,35 +1,64 @@
 const { assert, expect } = require('chai');
-const { loadGraph } = require('../util');
-const Graph = require('../graph');
+const {
+  loadGraph,
+  loadGraphAsync,
+} = require('../util');
 const { DATA } = require('./test-constants');
+const path = require('path');
+const Graph = require('../graph');
+const dataPath = path.join(__dirname, '..', 'data', 'sample-data.txt');
+
+const testLoading = graph => {
+  let map, actual;
+  const expected = {
+    A: ['B', 'D', 'E'],
+    B: ['C'],
+    C: ['D', 'E'],
+    D: ['C', 'E'],
+    E: ['B'],
+  };
+
+  Object.entries(expected).forEach(([node, edges]) => {
+    map = graph.adjList.get(node);
+
+    edges.forEach(edge => {
+      actual = map.get(edge).to;
+      expect(actual).to.equal(edge);
+    });
+  });
+};
 
 describe('util', () => {
-  describe('loadGraph', () => {
-    let graph;
+  let graph;
 
+  describe('loadGraph', () => {
     before(() => {
       graph = new Graph();
       loadGraph(DATA, graph);
     });
 
-    it('returns a map that represents the data as an adjancency', () => {
-      let map, actual;
-      const expected = {
-        A: ['B', 'D', 'E'],
-        B: ['C'],
-        C: ['D', 'E'],
-        D: ['C', 'E'],
-        E: ['B'],
-      };
+    it('should represent the data as an adjancency', () => {
+      testLoading(graph);
+    });
+  });
 
-      Object.entries(expected).forEach(([node, neighbors]) => {
-        map = graph.adjList.get(node);
+  describe('loadGraphAsync', () => {
+    let resolveGraph;
 
-        neighbors.forEach(expected => {
-          let actual = map.get(expected).to;
-          expect(actual).to.equal(expected);
-        });
+    before(() => {
+      graph = new Graph();
+      return loadGraphAsync(dataPath, graph).then(g => {
+        resolveGraph = g;
+        return g;
       });
+    });
+
+    it('should resolve the graph that is passed to it', () => {
+      expect(resolveGraph).to.equal(graph);
+    });
+
+    it('should represent the data as an adjancency', () => {
+      testLoading(graph);
     });
   });
 });

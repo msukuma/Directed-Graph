@@ -5,11 +5,15 @@ const FROM = 0;
 const TO = 1;
 const DIST = 2;
 
-function parseRawEdge(str) {
 
-}
-// assumes data is a comma and space separated string:
-//  "AB5, BC4, CD8, DC8, DE6, AD5, CE2, EB3, AE7"
+/**
+ * loadGraph - populates a graph from a string
+ *
+ * @param  {string} data - comma and space separated values in the form [FROM][TO][DISTANCE]
+ *                         e.g AB5, BC6
+ * @param  {type} graph description
+ * @returns {type}       description
+ */
 function loadGraph(data, graph) {
   data = data.split(', ');
 
@@ -23,6 +27,15 @@ function loadGraph(data, graph) {
   }
 }
 
+/**
+ * loadGraphAsync - populates a graph from a file whose content consists of
+ *                  newline separated values in the form [FROM][TO][DISTANCE]
+ *                  e.g AB5\nBC6\n
+ *
+ * @param  {string} pathToData - path to the data file
+ * @param  {Graph} graph - an instance of the Graph class
+ * @returns {Promise}
+ */
 function loadGraphAsync(pathToData, graph) {
   return new Promise((resolve, reject) => {
 
@@ -36,7 +49,6 @@ function loadGraphAsync(pathToData, graph) {
       to = edge[TO];
       dist = parseInt(edge.substring(DIST));
       graph.addEdge(from, to, dist);
-      // console.log(graph);
     });
 
     rl.on('close', () => {
@@ -47,9 +59,14 @@ function loadGraphAsync(pathToData, graph) {
       reject(err);
     });
   });
-
 }
 
+
+/**
+ * genData - generates graph data and saves data in the data folder
+ *
+ * @param  {string} s - one of ['s', 'm', 'l']
+ */
 function genData(s) {
   const small = 70;
   const mid = 90;
@@ -68,7 +85,7 @@ function genData(s) {
     throw new Error('size not one of [s, m, l]');
   }
 
-  const ws = fs.createWriteStream(path.join(__dirname, `graph-${s}.txt`));
+  const ws = fs.createWriteStream(path.join(__dirname, 'data', `graph-${s}.txt`));
 
   for (let i = 65, from, to, dist; i < size; i++) {
     from  = String.fromCodePoint(i);
