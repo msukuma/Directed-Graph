@@ -48,9 +48,9 @@ module.exports = class Graph {
     return null;
   }
 
-  getNeighbors(of) {
-    const map = this.adjList.get(of);
-    if (map) return map.keys();
+  getEdges(from) {
+    const map = this.adjList.get(from);
+    if (map) return map.values();
     return [];
   }
 };
