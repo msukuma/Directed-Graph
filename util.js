@@ -34,11 +34,12 @@ function loadGraphAsync(pathToData, graph) {
     rl.on('line', (edge) => {
       from = edge[FROM];
       to = edge[TO];
-      dist = parseInt(e.substring(DIST));
+      dist = parseInt(edge.substring(DIST));
       graph.addEdge(from, to, dist);
+      // console.log(graph);
     });
 
-    rl.on('end', () => {
+    rl.on('close', () => {
       resolve(graph);
     });
 
