@@ -60,10 +60,10 @@ module.exports = class RoutesGraph extends Graph {
     }
 
     if (method) {
-      const edges = this.getNeighbors(from);
+      const edges = this.getEdges(from);
       if (edges) {
-        for (let i = 0, n; i < edges.length; i++) {
-          n = nodesOnly ? edges[i].to : edges[i];
+        for (let edge of edges) {
+          n = nodesOnly ? edge.to : edge;
           trips += method.call(this, n, to, condition, 0);
         }
       }
@@ -82,11 +82,11 @@ module.exports = class RoutesGraph extends Graph {
     numStops++;
 
     if (numStops < maxStops) {
-      const edges = this.getNeighbors(cur);
+      const edges = this.getEdges(cur);
 
       if (edges) {
-        for (let i = 0; i < edges.length; i++) {
-          trips += this._maxStops(edges[i].to, to, maxStops, numStops);
+        for (let edge of edges) {
+          trips += this._maxStops(edge.to, to, maxStops, numStops);
         }
       }
     }
@@ -104,11 +104,11 @@ module.exports = class RoutesGraph extends Graph {
     } else {
       numStops++;
 
-      const edges = this.getNeighbors(cur);
+      const edges = this.getEdges(cur);
 
       if (edges) {
-        for (let i = 0; i < edges.length; i++) {
-          trips += this._exactStops(edges[i].to, to, stops, numStops);
+        for (let edge of edges) {
+          trips += this._exactStops(edge.to, to, stops, numStops);
         }
       }
     }
@@ -125,10 +125,10 @@ module.exports = class RoutesGraph extends Graph {
         trips++;
       }
 
-      const edges = this.getNeighbors(cur.to);
+      const edges = this.getEdges(cur.to);
       if (edges) {
-        for (let i = 0; i < edges.length; i++) {
-          trips += this._maxDistance(edges[i], to, maxDistance, distance);
+        for (let edge of edges) {
+          trips += this._maxDistance(edge, to, maxDistance, distance);
         }
       }
     }
@@ -141,7 +141,7 @@ module.exports = class RoutesGraph extends Graph {
     const parentMap = new Map();
     const q = new PriorityQueue((a, b) => a.distance < b.distance);
 
-    edges = this.getNeighbors(from);
+    edges = this.getEdges(from);
     if (edges) {
       q.push(...edges);
     }
@@ -153,13 +153,13 @@ module.exports = class RoutesGraph extends Graph {
         return getDistance(cur, parentMap);
       }
 
-      edges = this.getNeighbors(cur.to);
+      edges = this.getEdges(cur.to);
 
       if (edges) {
         q.push(...edges);
 
-        for (let i = 0; i < edges.length; i++) {
-          edge = edges[i];
+        for (let edge of edges) {
+          edge = edge;
           parents = parentMap.get(edge);
           if (parents) {
             parents.addFirst(cur);
@@ -180,6 +180,7 @@ function getDistance(node, parentMap) {
   let parents;
   let cur = node;
   let distance = 0;
+
   while (true) {
     distance += cur.distance;
     parents = parentMap.get(cur);
