@@ -8,6 +8,7 @@ const { assert, expect } = require('chai');
 const {
   DATA,
   NO_ROUTE,
+  A, B, C, D, E, F
 } = require('./test-constants');
 
 describe('RoutesGraph', () => {
@@ -18,7 +19,6 @@ describe('RoutesGraph', () => {
   });
 
   describe('constructor', () => {
-
     it('should create a graph instance', () => {
       expect(graph).to.be.an.instanceof(Graph);
     });
@@ -58,33 +58,61 @@ describe('RoutesGraph', () => {
     });
   });
 
-  describe('numTripsWithMaxStops', () => {
+  describe('numRoutes', () => {
+    let args;
+
     it('should exists', () => {
-      expect(graph.numTripsWithMaxStops).to.be.a('function');
+      expect(graph.numRoutes).to.be.a('function');
     });
 
-    it('should have an internal version', () => {
-      expect(graph._numTripsWithMaxStops).to.be.a('function');
+    describe('_maxStops', () => {
+      it('should exists', () => {
+        expect(graph._maxStops).to.be.a('function');
+      });
+
+      it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3}`, () => {
+        args = { from: C, to: C, maxStops: 3 };
+        expect(graph.numRoutes(args)).to.equal(2);
+      });
+
     });
 
-    it('should return 2 when called with "C" and "C" and 2', () => {
-      expect(graph.numTripsWithMaxStops('C', 'C', 3)).to.equal(2);
+    describe('_exactStops', () => {
+      it('should exists', () => {
+        expect(graph._exactStops).to.be.a('function');
+      });
+
+      it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4}`, () => {
+        args = { from: A, to: C, exactStops: 4 };
+        expect(graph.numRoutes(args)).to.equal(3);
+      });
     });
 
+    describe('_maxDistance', () => {
+      it('should exists', () => {
+        expect(graph._maxDistance).to.be.a('function');
+      });
+
+      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30}`, () => {
+        args = { from: C, to: C, maxDistance: 30 };
+        expect(graph.numRoutes(args)).to.equal(7);
+      });
+    });
   });
 
-  describe('numTripsExactStops', () => {
+  describe('shortestRoute', () => {
     it('should exists', () => {
-      expect(graph.numTripsExactStops).to.be.a('function');
+      expect(graph.shortestRoute).to.be.a('function');
     });
 
-    it('should have an internal version', () => {
-      expect(graph._numTripsExactStops).to.be.a('function');
+    it('should return -1 if there is no route');
+
+    it('should return 9 as the distance of the shortest route from A to C', () => {
+      expect(graph.shortestRoute(A, C)).to.equal(9);
     });
 
-    it('should return 2 when called with "A" and "C" and 2', () => {
-      expect(graph.numTripsExactStops('A', 'C', 4)).to.equal(3);
+    it('should return 9 as the distance of the shortest route from B to B', () => {
+      expect(graph.shortestRoute(B, B)).to.equal(9);
     });
-
   });
 });

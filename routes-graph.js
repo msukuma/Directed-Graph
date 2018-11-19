@@ -1,5 +1,5 @@
 const Graph = require('./graph');
-const PriorityQueue = require('./priority-queue');
+const PriorityQueue = require('qheap');
 const LinkedList = require('./linked-list');
 const { NO_ROUTE } = require('./constants');
 
@@ -63,8 +63,8 @@ module.exports = class RoutesGraph extends Graph {
       const edges = this.getEdges(from);
       if (edges) {
         for (let edge of edges) {
-          n = nodesOnly ? edge.to : edge;
-          trips += method.call(this, n, to, condition, 0);
+          from = nodesOnly ? edge.to : edge;
+          trips += method.call(this, from, to, condition, 0);
         }
       }
     }
@@ -139,15 +139,17 @@ module.exports = class RoutesGraph extends Graph {
   shortestRoute(from, to) {
     let cur, edge, edges, parents;
     const parentMap = new Map();
-    const q = new PriorityQueue((a, b) => a.distance < b.distance);
+    const q = new PriorityQueue({ comparBefore: (a, b) => a.distance < b.distance });
 
     edges = this.getEdges(from);
     if (edges) {
-      q.push(...edges);
+      for (edge of edges) {
+        q.enqueue(edge);
+      }
     }
 
-    while (!q.isEmpty()) {
-      cur = q.pop();
+    while (q.length) {
+      cur = q.dequeue();
 
       if (cur.to === to) {
         return getDistance(cur, parentMap);
@@ -156,10 +158,9 @@ module.exports = class RoutesGraph extends Graph {
       edges = this.getEdges(cur.to);
 
       if (edges) {
-        q.push(...edges);
 
         for (let edge of edges) {
-          edge = edge;
+          q.enqueue(edge);
           parents = parentMap.get(edge);
           if (parents) {
             parents.addFirst(cur);
