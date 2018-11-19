@@ -16,20 +16,12 @@ module.exports = class RoutesGraph extends Graph {
     }
 
     const nodes = route.split('-');
+    const len = nodes.length - 1;
     let dist = 0;
 
-    let from, to, edge;
-    let len = nodes.length - 1;
-
-    for (let i = 0; i < len; i++) {
-      from = nodes[i];
-      to = nodes[i + 1];
-      edge = this.getEdge(from, to);
-
-      if (!edge) {
-        return NO_ROUTE;
-      }
-
+    for (let i = 0, edge; i < len; i++) {
+      edge = this.getEdge(nodes[i], nodes[i + 1]);
+      if (!edge) return NO_ROUTE;
       dist += edge.distance;
     }
 
@@ -42,7 +34,7 @@ module.exports = class RoutesGraph extends Graph {
     }
 
     let method, condition;
-    let trips = 0;
+    let routes = 0;
     let nodesOnly = true;
 
     if (maxStops) {
@@ -64,101 +56,89 @@ module.exports = class RoutesGraph extends Graph {
       if (edges) {
         for (let edge of edges) {
           from = nodesOnly ? edge.to : edge;
-          trips += method.call(this, from, to, condition, 0);
+          routes += method.call(this, from, to, condition, 0);
         }
       }
     }
 
-    return trips;
+    return routes;
   }
 
   _maxStops(cur, to, maxStops, numStops) {
-    let trips = 0;
+    let routes = 0;
 
-    if (cur === to) {
-      trips++;
-    }
+    if (cur === to) routes++;
 
     numStops++;
 
     if (numStops < maxStops) {
       const edges = this.getEdges(cur);
 
-      if (edges) {
-        for (let edge of edges) {
-          trips += this._maxStops(edge.to, to, maxStops, numStops);
-        }
-      }
+      if (edges)
+        for (let edge of edges)
+          routes += this._maxStops(edge.to, to, maxStops, numStops);
+
     }
 
-    return trips;
+    return routes;
   }
 
   _exactStops(cur, to, stops, numStops) {
-    let trips = 0;
+    let routes = 0;
 
     if (numStops === stops) {
-      if (cur === to) {
-        trips++;
-      }
+      if (cur === to) routes++;
     } else {
       numStops++;
 
       const edges = this.getEdges(cur);
 
-      if (edges) {
-        for (let edge of edges) {
-          trips += this._exactStops(edge.to, to, stops, numStops);
-        }
-      }
+      if (edges)
+        for (let edge of edges)
+          routes += this._exactStops(edge.to, to, stops, numStops);
     }
 
-    return trips;
+    return routes;
   }
 
   _maxDistance(cur, to, maxDistance, distance) {
-    let trips = 0;
+    let routes = 0;
 
     distance += cur.distance;
     if (distance < maxDistance) {
       if (cur.to === to) {
-        trips++;
+        routes++;
       }
 
       const edges = this.getEdges(cur.to);
-      if (edges) {
-        for (let edge of edges) {
-          trips += this._maxDistance(edge, to, maxDistance, distance);
-        }
-      }
+      if (edges)
+        for (let edge of edges)
+          routes += this._maxDistance(edge, to, maxDistance, distance);
+
     }
 
-    return trips;
+    return routes;
   }
 
   shortestRoute(from, to) {
-    let cur, edge, edges, parents;
+    let cur, edges, parents;
     const parentMap = new Map();
     const q = new PriorityQueue({ comparBefore: (a, b) => a.distance < b.distance });
 
     edges = this.getEdges(from);
-    if (edges) {
-      for (edge of edges) {
+    if (edges)
+      for (let edge of edges)
         q.enqueue(edge);
-      }
-    }
 
     while (q.length) {
       cur = q.dequeue();
 
-      if (cur.to === to) {
+      if (cur.to === to)
         return getDistance(cur, parentMap);
-      }
 
       edges = this.getEdges(cur.to);
 
       if (edges) {
-
         for (let edge of edges) {
           q.enqueue(edge);
           parents = parentMap.get(edge);
@@ -185,11 +165,7 @@ function getDistance(node, parentMap) {
   while (true) {
     distance += cur.distance;
     parents = parentMap.get(cur);
-
-    if (!parents) {
-      return distance;
-    }
-
+    if (!parents) return distance;
     cur = parents.removeFirst();
   }
-};
+}
