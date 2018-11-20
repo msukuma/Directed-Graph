@@ -68,7 +68,6 @@ module.exports = class Graph {
     return null;
   }
 
-
   /**
    * getEdges - retrieves all out edges from 'from'.
    *
