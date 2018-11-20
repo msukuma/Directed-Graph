@@ -34,7 +34,6 @@ module.exports = class RoutesGraph extends Graph {
     return dist;
   }
 
-  g;
   /**
    * numRoutes - Finds the number of routes that start at 'from' and end at
    *             'to' that match one of 3 criteria: maxStops, exactStops, or
