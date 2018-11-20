@@ -8,7 +8,7 @@ const { assert, expect } = require('chai');
 const {
   DATA,
   NO_ROUTE,
-  A, B, C, D, E, F
+  A, B, C, D, E, F,
 } = require('./test-constants');
 
 describe('RoutesGraph', () => {
@@ -77,24 +77,36 @@ describe('RoutesGraph', () => {
 
     });
 
-    describe('_exactStops', () => {
+    describe('_maxStopsRecursive', () => {
       it('should exists', () => {
-        expect(graph._exactStops).to.be.a('function');
+        expect(graph._maxStopsRecursive).to.be.a('function');
       });
 
-      it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4}`, () => {
-        args = { from: A, to: C, exactStops: 4 };
+      it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3, recursive: true}`, () => {
+        args = { from: C, to: C, maxStops: 3, recursive: true };
+        expect(graph.numRoutes(args)).to.equal(2);
+      });
+
+    });
+
+    describe('_exactStopsRecursive', () => {
+      it('should exists', () => {
+        expect(graph._exactStopsRecursive).to.be.a('function');
+      });
+
+      it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4, recursive: true}`, () => {
+        args = { from: A, to: C, exactStops: 4, recursive: true };
         expect(graph.numRoutes(args)).to.equal(3);
       });
     });
 
-    describe('_maxDistance', () => {
+    describe('_maxDistanceRecursive ', () => {
       it('should exists', () => {
-        expect(graph._maxDistance).to.be.a('function');
+        expect(graph._maxDistanceRecursive).to.be.a('function');
       });
 
-      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30}`, () => {
-        args = { from: C, to: C, maxDistance: 30 };
+      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30, recursive: true}`, () => {
+        args = { from: C, to: C, maxDistance: 30, recursive: true };
         expect(graph.numRoutes(args)).to.equal(7);
       });
     });

@@ -28,9 +28,9 @@ module.exports = class RoutesGraph extends Graph {
     return dist;
   }
 
-  numRoutes({ from, to, maxStops, exactStops, maxDistance }) {
+  numRoutes({ from, to, maxStops, exactStops, maxDistance, recursive }) {
     if (!(maxStops || exactStops || maxDistance)) {
-      throw new Error('one of [maxStops, exactStops, maxDistance] must be passed value > 0');
+      throw new Error('one of [maxStops, exactStopsRecursive, maxDistance] must be passed a value > 0');
     }
 
     let method, condition;
@@ -38,25 +38,72 @@ module.exports = class RoutesGraph extends Graph {
     let nodesOnly = true;
 
     if (maxStops) {
-      method = this._maxStops;
+      method = recursive ? this._maxStopsRecursive : this._maxStops;
       condition = maxStops;
     }
     else if (exactStops) {
-      method = this._exactStops;
+      method = recursive ? this._exactStopsRecursive : this._exactStops;
       condition = exactStops;
     }
     else if (maxDistance) {
-      method = this._maxDistance;
+      method = recursive ? this._maxDistanceRecursive : this._maxDistance;
       condition = maxDistance;
       nodesOnly = false;
     }
 
     if (method) {
-      const edges = this.getEdges(from);
-      if (edges) {
-        for (let edge of edges) {
-          from = nodesOnly ? edge.to : edge;
-          routes += method.call(this, from, to, condition, 0);
+      if (recursive) {
+        const edges = this.getEdges(from);
+        if (edges) {
+          for (let edge of edges) {
+            from = nodesOnly ? edge.to : edge;
+            routes += method.call(this, from, to, condition, 0);
+          }
+        }
+      } else {
+        routes += method.call(this, from, to, condition);
+      }
+    }
+
+    return routes;
+  }
+
+  _maxStops(from, to, maxStops) {
+    let routes, stops, cur, edges, numEdges, len, next;
+    const edgesAtStop = [1];
+    const q = [];
+
+    routes = stops = numEdges = 0;
+    edges = this.getEdges(from);
+
+    if (edges) {
+      for (let edge of edges) {
+        q.push(edge);
+        numEdges++;
+      }
+
+      edgesAtStop.push(numEdges);
+
+      while (q.length && stops < maxStops) {
+        stops++;
+        len = edgesAtStop[stops];
+        next = stops + 1;
+        edgesAtStop.push(0);
+
+        for (let i = 0; i < len; i++) {
+          cur = q.shift();
+          if (cur.to === to) routes++;
+          edges = this.getEdges(cur.to);
+
+          if (edges) {
+            numEdges = 0;
+            for (let edge of edges) {
+              q.push(edge);
+              numEdges++;
+            }
+
+            edgesAtStop[next] += numEdges;
+          }
         }
       }
     }
@@ -64,7 +111,7 @@ module.exports = class RoutesGraph extends Graph {
     return routes;
   }
 
-  _maxStops(cur, to, maxStops, numStops) {
+  _maxStopsRecursive(cur, to, maxStops, numStops) {
     let routes = 0;
 
     if (cur === to) routes++;
@@ -76,14 +123,14 @@ module.exports = class RoutesGraph extends Graph {
 
       if (edges)
         for (let edge of edges)
-          routes += this._maxStops(edge.to, to, maxStops, numStops);
+          routes += this._maxStopsRecursive(edge.to, to, maxStops, numStops);
 
     }
 
     return routes;
   }
 
-  _exactStops(cur, to, stops, numStops) {
+  _exactStopsRecursive(cur, to, stops, numStops) {
     let routes = 0;
 
     if (numStops === stops) {
@@ -95,13 +142,13 @@ module.exports = class RoutesGraph extends Graph {
 
       if (edges)
         for (let edge of edges)
-          routes += this._exactStops(edge.to, to, stops, numStops);
+          routes += this._exactStopsRecursive(edge.to, to, stops, numStops);
     }
 
     return routes;
   }
 
-  _maxDistance(cur, to, maxDistance, distance) {
+  _maxDistanceRecursive(cur, to, maxDistance, distance) {
     let routes = 0;
 
     distance += cur.distance;
@@ -113,7 +160,7 @@ module.exports = class RoutesGraph extends Graph {
       const edges = this.getEdges(cur.to);
       if (edges)
         for (let edge of edges)
-          routes += this._maxDistance(edge, to, maxDistance, distance);
+          routes += this._maxDistanceRecursive(edge, to, maxDistance, distance);
 
     }
 
