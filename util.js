@@ -5,30 +5,8 @@ const FROM = 0;
 const TO = 1;
 const DIST = 2;
 
-
 /**
- * loadGraph - populates a graph from a string
- *
- * @param  {string} data - comma and space separated values in the form [FROM][TO][DISTANCE]
- *                         e.g AB5, BC6
- * @param  {type} graph description
- * @returns {type}       description
- */
-function loadGraph(data, graph) {
-  data = data.split(', ');
-
-  for (let i = 0, e, from, to, dist; i < data.length; i++) {
-    e = data[i];
-    from = e[FROM];
-    to = e[TO];
-    dist = parseInt(e.substring(DIST));
-
-    graph.addEdge(from, to, dist);
-  }
-}
-
-/**
- * loadGraphAsync - populates a graph from a file whose content consists of
+ * loadGraph - populates a graph from a file whose content consists of
  *                  newline separated values in the form [FROM][TO][DISTANCE]
  *                  e.g AB5\nBC6\n
  *
@@ -36,7 +14,7 @@ function loadGraph(data, graph) {
  * @param  {Graph} graph - an instance of the Graph class
  * @returns {Promise}
  */
-function loadGraphAsync(pathToData, graph) {
+function loadGraph(pathToData, graph) {
   return new Promise((resolve, reject) => {
 
     const rl = readline.createInterface({
@@ -59,6 +37,28 @@ function loadGraphAsync(pathToData, graph) {
       reject(err);
     });
   });
+}
+
+
+/**
+ * loadGraphSync - populates a graph from a string
+ *
+ * @param  {string} data - comma and space separated values in the form [FROM][TO][DISTANCE]
+ *                         e.g AB5, BC6
+ * @param  {type} graph description
+ * @returns {type}       description
+ */
+function loadGraphSync(data, graph) {
+  data = data.split(', ');
+
+  for (let i = 0, e, from, to, dist; i < data.length; i++) {
+    e = data[i];
+    from = e[FROM];
+    to = e[TO];
+    dist = parseInt(e.substring(DIST));
+
+    graph.addEdge(from, to, dist);
+  }
 }
 
 
@@ -109,6 +109,6 @@ function genData(s) {
 
 module.exports = {
   loadGraph,
-  loadGraphAsync,
+  loadGraphSync,
   genData,
 };

@@ -1,5 +1,5 @@
 const Graph = require('../graph');
-const { loadGraph } = require('../util');
+const { loadGraphSync } = require('../util');
 const { assert, expect } = require('chai');
 const {
   DATA,
@@ -10,7 +10,7 @@ describe('Graph', () => {
   let graph;
   before(() => {
     graph = new Graph();
-    loadGraph(DATA, graph);
+    loadGraphSync(DATA, graph);
   });
 
   describe('constructor', () => {

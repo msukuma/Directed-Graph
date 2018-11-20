@@ -1,7 +1,7 @@
 const { assert, expect } = require('chai');
 const {
   loadGraph,
-  loadGraphAsync,
+  loadGraphSync,
 } = require('../util');
 const { DATA } = require('./test-constants');
 const path = require('path');
@@ -31,10 +31,10 @@ const testLoading = graph => {
 describe('util', () => {
   let graph;
 
-  describe('loadGraph', () => {
+  describe('loadGraphSync', () => {
     before(() => {
       graph = new Graph();
-      loadGraph(DATA, graph);
+      loadGraphSync(DATA, graph);
     });
 
     it('should represent the data as an adjancency', () => {
@@ -42,12 +42,12 @@ describe('util', () => {
     });
   });
 
-  describe('loadGraphAsync', () => {
+  describe('loadGraph', () => {
     let resolveGraph;
 
     before(() => {
       graph = new Graph();
-      return loadGraphAsync(dataPath, graph).then(g => {
+      return loadGraph(dataPath, graph).then(g => {
         resolveGraph = g;
         return g;
       });
