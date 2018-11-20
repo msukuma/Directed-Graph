@@ -1,9 +1,9 @@
-const RoutesGraph = require('../routes-graph');
-const Graph = require('../graph');
+const RoutesGraph = require('../lib/routes-graph');
+const Graph = require('../lib/graph');
 const {
   loadGraphSync,
   loadGraph,
-} = require('../util');
+} = require('../lib/util');
 const { assert, expect } = require('chai');
 const {
   DATA,

@@ -2,10 +2,10 @@ const { assert, expect } = require('chai');
 const {
   loadGraph,
   loadGraphSync,
-} = require('../util');
+} = require('../lib/util');
 const { DATA } = require('./test-constants');
 const path = require('path');
-const Graph = require('../graph');
+const Graph = require('../lib/graph');
 const dataPath = path.join(__dirname, '..', 'data', 'sample-data.txt');
 
 const testLoading = graph => {

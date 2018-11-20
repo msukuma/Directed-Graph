@@ -1,4 +1,4 @@
-const { NO_ROUTE } = require('../constants');
+const { NO_ROUTE } = require('../lib/constants');
 
 module.exports = {
   NO_ROUTE,

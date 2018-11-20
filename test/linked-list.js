@@ -1,4 +1,4 @@
-const LinkedList = require('../linked-list');
+const LinkedList = require('../lib/linked-list');
 const { assert, expect } = require('chai');
 
 describe('LinkedList', () => {

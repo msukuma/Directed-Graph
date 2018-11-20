@@ -1,9 +1,9 @@
-const Graph = require('../graph');
-const { loadGraphSync } = require('../util');
+const Graph = require('../lib/graph');
+const { loadGraphSync } = require('../lib/util');
 const { assert, expect } = require('chai');
 const {
   DATA,
-  A, B, C, D, E, F
+  A, B, C, D, E, F,
 } = require('./test-constants');
 
 describe('Graph', () => {

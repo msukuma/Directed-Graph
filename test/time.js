@@ -4,9 +4,9 @@ const {
   performance,
   PerformanceObserver,
 } = require('perf_hooks');
-const { loadGraph } = require('../util');
+const { loadGraph } = require('../lib/util');
 const dataPath = path.join(__dirname, '..', 'data', 'sample-data.txt');
-const RoutesGraph = require('../routes-graph');
+const RoutesGraph = require('../lib/routes-graph');
 
 function time(itr) {
   const graph = new RoutesGraph();
