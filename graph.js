@@ -5,7 +5,6 @@ module.exports = class Graph {
     this.adjList = new Map();
   }
 
-
   /**
    * addEdge - adds an edge to the graph
    *
