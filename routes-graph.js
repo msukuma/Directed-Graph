@@ -336,7 +336,6 @@ module.exports = class RoutesGraph extends Graph {
   }
 };
 
-
 /**
  * getDistance - calcualtes the distance of a route from 'edge' to the route's
  *               source.
