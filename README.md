@@ -26,3 +26,9 @@ loadGraph(dataPath, graph).then(g => {
   const shortest = graph.shortestRoute('A','C');
 })
 ```
+
+Notes
+-----
+There are 2 branches to review
+  1. master - implements graph using adjancency - Map<Node, Map<Node, Edge>;
+  2. map-n-list - implements graph using adjancency - Map<Node, Array<Edge>;
