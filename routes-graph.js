@@ -253,15 +253,19 @@ module.exports = class RoutesGraph extends Graph {
   }
 };
 
-function getDistance(node, parentMap) {
+function getDistance(edge, parentMap) {
   let parents;
-  let cur = node;
+  let cur = edge;
   let distance = 0;
 
-  while (true) {
+  // console.log(parentMap);
+
+  while (cur) {
     distance += cur.distance;
     parents = parentMap.get(cur);
     if (!parents) return distance;
     cur = parents.removeFirst();
   }
+
+  return distance;
 }
