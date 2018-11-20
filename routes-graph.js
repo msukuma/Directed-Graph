@@ -70,6 +70,7 @@ module.exports = class RoutesGraph extends Graph {
     }
     else if (maxDistance) {
       method = this._maxDistanceRecursive;
+      recursive = true;
       condition = maxDistance;
       nodesOnly = false;
     }
