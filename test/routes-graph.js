@@ -70,7 +70,7 @@ describe('RoutesGraph', () => {
         expect(graph._maxStops).to.be.a('function');
       });
 
-      it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3}`, () => {
+      it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3 }`, () => {
         args = { from: C, to: C, maxStops: 3 };
         expect(graph.numRoutes(args)).to.equal(2);
       });
@@ -82,11 +82,22 @@ describe('RoutesGraph', () => {
         expect(graph._maxStopsRecursive).to.be.a('function');
       });
 
-      it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3, recursive: true}`, () => {
+      it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3, recursive: true }`, () => {
         args = { from: C, to: C, maxStops: 3, recursive: true };
         expect(graph.numRoutes(args)).to.equal(2);
       });
 
+    });
+
+    describe('_exactStops', () => {
+      it('should exists', () => {
+        expect(graph._exactStops).to.be.a('function');
+      });
+
+      it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4 }`, () => {
+        args = { from: A, to: C, exactStops: 4 };
+        expect(graph.numRoutes(args)).to.equal(3);
+      });
     });
 
     describe('_exactStopsRecursive', () => {
@@ -94,7 +105,7 @@ describe('RoutesGraph', () => {
         expect(graph._exactStopsRecursive).to.be.a('function');
       });
 
-      it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4, recursive: true}`, () => {
+      it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4, recursive: true }`, () => {
         args = { from: A, to: C, exactStops: 4, recursive: true };
         expect(graph.numRoutes(args)).to.equal(3);
       });
@@ -105,7 +116,7 @@ describe('RoutesGraph', () => {
         expect(graph._maxDistanceRecursive).to.be.a('function');
       });
 
-      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30, recursive: true}`, () => {
+      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30, recursive: true }`, () => {
         args = { from: C, to: C, maxDistance: 30, recursive: true };
         expect(graph.numRoutes(args)).to.equal(7);
       });

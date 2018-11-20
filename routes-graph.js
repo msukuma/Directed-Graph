@@ -130,6 +130,55 @@ module.exports = class RoutesGraph extends Graph {
     return routes;
   }
 
+  _exactStops(from, to, stops) {
+    let routes, numStops, cur, edges, numEdges, len, next;
+    const edgesAtStop = [1];
+    const q = [];
+
+    routes = numStops = numEdges = 0;
+    edges = this.getEdges(from);
+
+    if (edges) {
+      for (let edge of edges) {
+        q.push(edge);
+        numEdges++;
+      }
+
+      edgesAtStop.push(numEdges);
+
+      while (q.length && numStops < stops) {
+        numStops++;
+        len = edgesAtStop[numStops];
+        next = numStops + 1;
+        edgesAtStop.push(0);
+
+        for (let i = 0; i < len; i++) {
+          cur = q.shift();
+          edges = this.getEdges(cur.to);
+
+          if (edges) {
+            numEdges = 0;
+            for (let edge of edges) {
+              q.push(edge);
+              numEdges++;
+            }
+
+            edgesAtStop[next] += numEdges;
+          }
+        }
+      }
+
+      if (numStops === stops) {
+        len = edgesAtStop[next];
+        for (let i = 0; i < len; i++) {
+          if (q[i].to === to) routes++;
+        }
+      }
+    }
+
+    return routes;
+  }
+
   _exactStopsRecursive(cur, to, stops, numStops) {
     let routes = 0;
 
