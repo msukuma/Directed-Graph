@@ -46,7 +46,7 @@ module.exports = class RoutesGraph extends Graph {
    * @param  {number} exactStops   - Exact number of stops a route must have. Disregards
    *                                 maxDistance.
    * @param  {number} maxDistance  - Upper limit for the  distance a route can have.
-   * @param  {boolean} recursive } - whether to computer iteratively or recursively.
+   * @param  {boolean} recursive } - whether to computer iteratively or recursively(maxStops and exactStops only).
    * @returns {number}             - The number of trips that match one of the 3 criteria above.
    */
   numRoutes({ from, to, maxStops, exactStops, maxDistance, recursive }) {
@@ -69,7 +69,7 @@ module.exports = class RoutesGraph extends Graph {
       condition = exactStops;
     }
     else if (maxDistance) {
-      method = recursive ? this._maxDistanceRecursive : this._maxDistance;
+      method = this._maxDistanceRecursive;
       condition = maxDistance;
       nodesOnly = false;
     }
