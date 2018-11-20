@@ -5,6 +5,14 @@ module.exports = class Graph {
     this.adjList = new Map();
   }
 
+
+  /**
+   * addEdge - adds an edge to the graph
+   *
+   * @param  {string} from      - String of length 1 e.g 'A'.
+   * @param  {string} to        - String of length 1 e.g 'A'.
+   * @param  {number} distance  - distance from 'from' to 'to'.
+   */
   addEdge(from, to, distance) {
     const edge = new Edge(from, to, distance);
     let map = this.adjList.get(from);
@@ -18,6 +26,12 @@ module.exports = class Graph {
     }
   }
 
+  /**
+   * hasNodes - checks that every node in 'nodes' is part of the graph
+   *
+   * @param  {Array<string>} nodes - An array or strings e.g ['A', 'F', ...].
+   * @returns {boolean}            - True if they all exist, false otherwise.
+   */
   hasNodes(nodes) {
     let node;
 
@@ -38,6 +52,13 @@ module.exports = class Graph {
     return true;
   }
 
+  /**
+   * getEdge - returns and edge from 'from' to 'to'.
+   *
+   * @param  {string} from      - String of length 1 e.g 'A'.
+   * @param  {string} to        - String of length 1 e.g 'A'.
+   * @returns {Edge}            - An Edge instance or null;
+   */
   getEdge(from, to) {
     const map = this.adjList.get(from);
 
@@ -48,6 +69,13 @@ module.exports = class Graph {
     return null;
   }
 
+
+  /**
+   * getEdges - retrieves all out edges from 'from'.
+   *
+   * @param  {string} from      - String of length 1 e.g 'A'.
+   * @returns {iterator}        - Returns an iterator
+   */
   getEdges(from) {
     const map = this.adjList.get(from);
     if (map) return map.values();
