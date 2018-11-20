@@ -8,6 +8,12 @@ module.exports = class RoutesGraph extends Graph {
     super(data);
   }
 
+  /**
+   * distance - Calcualtes the distance of a route.
+   *
+   * @param  {string} route    - A dash separated string e.g 'A-B-C'.
+   * @returns {number|string}  - The distance of the route or 'NO SUCH ROUTE'.
+   */
   distance(route) {
     route = route.trim();
 
@@ -28,9 +34,27 @@ module.exports = class RoutesGraph extends Graph {
     return dist;
   }
 
+  g;
+  /**
+   * numRoutes - Finds the number of routes that start at 'from' and end at
+   *             'to' that match one of 3 criteria: maxStops, exactStops, or
+   *             maxDistance.
+   *
+   * @param  {string} { from       - String of length 1 e.g 'A'.
+   * @param  {string} to           - String of length 1 e.g 'A'.
+   * @param  {number} maxStops     - Upper limit for the number of stops a route can have.
+   *                                 Disregards exactStops and maxDistance
+   * @param  {number} exactStops   - Exact number of stops a route must have. Disregards
+   *                                 maxDistance.
+   * @param  {number} maxDistance  - Upper limit for the  distance a route can have.
+   * @param  {boolean} recursive } - whether to computer iteratively or recursively.
+   * @returns {number}             - The number of trips that match one of the 3 criteria above.
+   */
   numRoutes({ from, to, maxStops, exactStops, maxDistance, recursive }) {
     if (!(maxStops || exactStops || maxDistance)) {
-      throw new Error('one of [maxStops, exactStopsRecursive, maxDistance] must be passed a value > 0');
+      throw new Error(
+        'maxStops or exactStopsRecursive or maxDistance must have a value > 0'
+      );
     }
 
     let method, condition;
@@ -68,6 +92,16 @@ module.exports = class RoutesGraph extends Graph {
     return routes;
   }
 
+  /**
+   * _maxStops - Finds the number of routes that are less than 'maxStops'
+   *             stops away from 'from' and end at 'to'.
+   *
+   * @param  {string} from     - String of length 1 e.g 'A'.
+   * @param  {string} to       - String of length 1 e.g 'A'.
+   * @param  {number} maxStops - Upper limit for the number of stops a route can
+   *                             have.
+   * @returns {number}         - Number of routes that match criteria.
+   */
   _maxStops(from, to, maxStops) {
     let routes, stops, cur, edges, numEdges, len, next;
     const edgesAtStop = [1];
@@ -111,6 +145,17 @@ module.exports = class RoutesGraph extends Graph {
     return routes;
   }
 
+  /**
+   * _maxStopsRecursive - Finds the number of routes that are less than
+   *                      'maxStops' stops away from 'from' and end at 'to'
+   *                      recursively.
+   *
+   * @param  {string} cur      - String of length 1 e.g 'A'.
+   * @param  {string} to       - String of length 1 e.g 'A'.
+   * @param  {number} maxStops - Upper limit for the number of stops a route can have.
+   * @param  {number} numStops - The number of stops made so far.
+   * @returns {number}         - Number of routes that match criteria.
+   */
   _maxStopsRecursive(cur, to, maxStops, numStops) {
     let routes = 0;
 
@@ -130,6 +175,15 @@ module.exports = class RoutesGraph extends Graph {
     return routes;
   }
 
+  /**
+   * _exactStops - Finds the number of routes that are exaclty 'stops' stops
+   *               away from 'from' and end at 'to'.
+   *
+   * @param  {string} from  - String of length 1 e.g 'A'.
+   * @param  {string} to    - String of length 1 e.g 'A'.
+   * @param  {number} stops - The number of stops a route must have
+   * @returns {number}      - Number of routes that match criteria.
+   */
   _exactStops(from, to, stops) {
     let routes, numStops, cur, edges, numEdges, len, next;
     const edgesAtStop = [1];
@@ -179,6 +233,16 @@ module.exports = class RoutesGraph extends Graph {
     return routes;
   }
 
+  /**
+   * _exactStopsRecursive - Finds the number of routes that are exaclty 'stops'
+   *                        stops away from 'from' and end at 'to' recursively.
+   *
+   * @param  {string} cur      - String of length 1 e.g 'A'.
+   * @param  {string} to       - String of length 1 e.g 'A'.
+   * @param  {number} stops    - The number of stops a route must have.
+   * @param  {number} numStops - The number of stops made so far.
+   * @returns {number}         - Number of routes that match criteria.
+   */
   _exactStopsRecursive(cur, to, stops, numStops) {
     let routes = 0;
 
@@ -197,6 +261,17 @@ module.exports = class RoutesGraph extends Graph {
     return routes;
   }
 
+  /**
+   * _maxDistanceRecursive - Finds the number of routes that are less than
+   *                         'maxDistance' away from 'from' and end at 'to'
+   *                         recursively.
+   *
+   * @param  {string} cur           - String of length 1 e.g 'A'.
+   * @param  {string} to            - String of length 1 e.g 'A'.
+   * @param  {number} maxDistance   - The number of stops a route must have.
+   * @param  {number} distance      - The number of stops made so far.
+   * @returns {number}              - Number of routes that match criteria.
+   */
   _maxDistanceRecursive(cur, to, maxDistance, distance) {
     let routes = 0;
 
@@ -216,6 +291,14 @@ module.exports = class RoutesGraph extends Graph {
     return routes;
   }
 
+  /**
+   * shortestRoute - Finds the number of shortest routes from 'from' to 'to' in
+   *                 terms of distance.
+   *
+   * @param  {string} from - String of length 1 e.g 'A'.
+   * @param  {string} to   - String of length 1 e.g 'A'.
+   * @returns {number}     - Number of routes that match criteria.
+   */
   shortestRoute(from, to) {
     let cur, edges, parents;
     const parentMap = new Map();
@@ -253,6 +336,16 @@ module.exports = class RoutesGraph extends Graph {
   }
 };
 
+
+/**
+ * getDistance - calcualtes the distance of a route from 'edge' to the route's
+ *               source.
+ *
+ * @param  {Edge} edge      - An Edge instance.
+ * @param  {Map<Edge, LinkedList<Edge>>} parentMap  - A Map instance that maps its keys (edges) to their
+ *                            parents(LinkedList of edges edges).
+ * @returns {number}        - The distance
+ */
 function getDistance(edge, parentMap) {
   let parents;
   let cur = edge;
