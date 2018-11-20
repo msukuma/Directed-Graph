@@ -360,3 +360,5 @@ function getDistance(edge, parentMap) {
 
   return distance;
 }
+
+module.exports.util = require('./util');

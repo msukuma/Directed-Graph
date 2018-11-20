@@ -13,18 +13,21 @@ Usage
 
 ```JavaScript
 const path = require('path');
-const { loadGraph } = require('./util')
-const RoutesGraph = require('./routes-graph');
-const dataPath = path.join(pathToData)
+const RoutesGraph = require('routes-graph');
+const { loadGraph } = require('routes-graph').util;
+const dataPath = path.join(__dirname, 'path-to-some-file.txt');
 
 const graph = new RoutesGraph();
 loadGraph(dataPath, graph).then(g => {
+  console.log(g);
   const distance = graph.distance('A-B-C');
-  const maxStops = graph.numRoutes({from: 'A', to: 'C', maxStops: 3});
-  const exactStops = graph.numRoutes({from: 'A', to: 'C', exactStops: 3});
-  const maxDist = graph.numRoutes({from: 'A', to: 'C', maxDistance: 30});
-  const shortest = graph.shortestRoute('A','C');
-})
+  const maxStops = graph.numRoutes({ from: 'A', to: 'C', maxStops: 3 });
+  const exactStops = graph.numRoutes({ from: 'A', to: 'C', exactStops: 3 });
+  const maxDist = graph.numRoutes({ from: 'A', to: 'C', maxDistance: 30 });
+  const shortest = graph.shortestRoute('A', 'C');
+
+  console.log(distance, maxStops, exactStops, maxDist, shortest);
+});
 ```
 
 Notes
