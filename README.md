@@ -24,7 +24,7 @@ loadGraph(dataPath, graph).then(g => {
   const to = 'C';
   const distance = graph.distance('A-B-C');
   const maxStops = graph.numRoutes({ from, to, maxStops: 3 });
-  const exactStops = graph.numRoutes({ from, to, exactStops: 3 });
+  const exactStops = graph.numRoutes({ from, to, exactStops: 3, recursive: true });
   const maxDist = graph.numRoutes({ from, to, maxDistance: 30 });
   const shortest = graph.shortestRoute(from, to);
 
