@@ -2,7 +2,7 @@
   "name": "routes-graph",
   "version": "0.1.0",
   "description": "",
-  "main": "routes-graph.js",
+  "main": "lib/routes-graph.js",
   "scripts": {
     "test": "mocha test/test.js"
   },
