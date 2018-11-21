@@ -33,38 +33,10 @@ describe('helpers', () => {
     route = new LinkedList(AC, CD, DA, AD, DE);
   });
 
-  // beforeEach(() => rebuildParenMap(route, map));
-
   describe('getDistance', () => {
     it('should return the distance from the end of a route to its origin', () => {
       const distance = getDistance(DE, map);
       expect(distance).to.equal(10);
     });
-
-    it('should rebuild the route if rebuild arg is true', () => {
-      const rebuild = true;
-      const distance = getDistance(DE, map, rebuild);
-      testRebuild();
-      expect(getDistance(DE, map)).to.equal(distance);
-    });
-  });
-
-  describe('rebuildParenMap', () => {
-    it('should rebuild a parent map from a LinkedList route', () => {
-      getDistance(DE, map);
-      rebuildParenMap(route, map);
-      testRebuild();
-    });
-
-    it('should rebuild a route with a length of 1', () => {
-      route = new LinkedList(AC);
-      map.get(C).removeFirst();
-      rebuildParenMap(route, map);
-      expect(map.get(C).head.val).to.equal(AC);
-    });
-  });
-
-  describe('isCircular', () => {
-
   });
 });
