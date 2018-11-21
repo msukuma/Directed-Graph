@@ -3,10 +3,12 @@ const {
   loadGraph,
   loadGraphSync,
 } = require('../lib/util');
-const { DATA } = require('./test-constants');
+const {
+  DATA,
+  dataPath,
+} = require('./test-constants');
 const path = require('path');
 const Graph = require('../lib/graph');
-const dataPath = path.join(__dirname, '..', 'data', 'sample-data.txt');
 
 const testLoading = graph => {
   let map, actual;

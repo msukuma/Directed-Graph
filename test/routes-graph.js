@@ -1,12 +1,12 @@
 const RoutesGraph = require('../lib/routes-graph');
 const Graph = require('../lib/graph');
 const {
-  loadGraphSync,
   loadGraph,
+  loadGraphSync,
 } = require('../lib/util');
 const { assert, expect } = require('chai');
 const {
-  DATA,
+  dataPath,
   NO_ROUTE,
   A, B, C, D, E, F,
 } = require('./test-constants');
@@ -15,7 +15,7 @@ describe('RoutesGraph', () => {
   let graph;
   before(() => {
     graph = new RoutesGraph();
-    loadGraphSync(DATA, graph);
+    loadGraph(dataPath, graph).then(g => g);
   });
 
   describe('constructor', () => {
@@ -149,7 +149,7 @@ describe('RoutesGraph', () => {
     });
 
     it('throws an error if one of the inputs is not a 1 char string', () => {
-      expect(() => { graph._validateNodes('NO'); }).to.throw('graph');
+      expect(() => { graph._validateNodes('NO'); }).to.throw('length');
     });
   });
 });
