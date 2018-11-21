@@ -31,9 +31,3 @@ loadGraph(dataPath, graph).then(g => {
   console.log(distance, maxStops, exactStops, maxDist, shortest);
 });
 ```
-
-Notes
------
-There are 2 branches to review
-  1. master - implements graph using adjancency - Map<Node, Map<Node, Edge>>
-  2. map-n-list - implements graph using adjancency - Map<Node, Array<Edge>>
