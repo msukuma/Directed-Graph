@@ -31,7 +31,7 @@ describe('LinkedList', () => {
   });
 
   describe('addFirst', () => {
-    it('should exists', () => {
+    it('exists', () => {
       expect(list.addFirst).to.be.a('function');
     });
 
@@ -43,7 +43,7 @@ describe('LinkedList', () => {
   });
 
   describe('removeFirst', () => {
-    it('should exists', () => {
+    it('exists', () => {
       expect(list.removeFirst).to.be.a('function');
     });
 
@@ -56,7 +56,7 @@ describe('LinkedList', () => {
   });
 
   describe('addAll', () => {
-    it('should exists', () => {
+    it('exists', () => {
       expect(list.addAll).to.be.a('function');
     });
 

@@ -25,7 +25,7 @@ describe('RoutesGraph', () => {
   });
 
   describe('distance', () => {
-    it('should exists', () => {
+    it('exists', () => {
       expect(graph.distance).to.be.a('function');
     });
 
@@ -61,12 +61,12 @@ describe('RoutesGraph', () => {
   describe('numRoutes', () => {
     let args;
 
-    it('should exists', () => {
+    it('exists', () => {
       expect(graph.numRoutes).to.be.a('function');
     });
 
     describe('_maxStops', () => {
-      it('should exists', () => {
+      it('exists', () => {
         expect(graph._maxStops).to.be.a('function');
       });
 
@@ -78,7 +78,7 @@ describe('RoutesGraph', () => {
     });
 
     describe('_maxStopsRecursive', () => {
-      it('should exists', () => {
+      it('exists', () => {
         expect(graph._maxStopsRecursive).to.be.a('function');
       });
 
@@ -90,7 +90,7 @@ describe('RoutesGraph', () => {
     });
 
     describe('_exactStops', () => {
-      it('should exists', () => {
+      it('exists', () => {
         expect(graph._exactStops).to.be.a('function');
       });
 
@@ -101,7 +101,7 @@ describe('RoutesGraph', () => {
     });
 
     describe('_exactStopsRecursive', () => {
-      it('should exists', () => {
+      it('exists', () => {
         expect(graph._exactStopsRecursive).to.be.a('function');
       });
 
@@ -112,7 +112,7 @@ describe('RoutesGraph', () => {
     });
 
     describe('_maxDistanceRecursive ', () => {
-      it('should exists', () => {
+      it('exists', () => {
         expect(graph._maxDistanceRecursive).to.be.a('function');
       });
 
@@ -124,7 +124,7 @@ describe('RoutesGraph', () => {
   });
 
   describe('shortestRoute', () => {
-    it('should exists', () => {
+    it('exists', () => {
       expect(graph.shortestRoute).to.be.a('function');
     });
 

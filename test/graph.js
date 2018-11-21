@@ -20,7 +20,7 @@ describe('Graph', () => {
   });
 
   describe('hasNodes', () => {
-    it('should exists', () => {
+    it('exists', () => {
       expect(graph.hasNodes).to.be.a('function');
     });
 
@@ -39,7 +39,7 @@ describe('Graph', () => {
   });
 
   describe('getEdge', () => {
-    it('should exists', () => {
+    it('exists', () => {
       expect(graph.getEdge).to.be.a('function');
     });
 
