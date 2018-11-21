@@ -138,4 +138,18 @@ describe('RoutesGraph', () => {
       expect(graph.shortestRoute(B, B)).to.equal(9);
     });
   });
+
+  describe('_validateNodes', () => {
+    it('exists', () => {
+      expect(graph.shortestRoute).to.be.a('function');
+    });
+
+    it('throws an error if one of the input nodes does not exist', () => {
+      expect(() => { graph._validateNodes(F); }).to.throw('graph');
+    });
+
+    it('throws an error if one of the inputs is not a 1 char string', () => {
+      expect(() => { graph._validateNodes('NO'); }).to.throw('graph');
+    });
+  });
 });
