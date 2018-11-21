@@ -24,22 +24,17 @@ describe('Graph', () => {
       expect(graph.hasNodes).to.be.a('function');
     });
 
-    it('validates input is an Array', () => {
-      const badCall = () => graph.hasNodes('A-B-C');
-      expect(badCall).to.throw('Array');
-    });
-
-    it('validates input is an Array of 1 char strings', () => {
-      const badCall = () => graph.hasNodes([A, B, {}]);
+    it('validates inputs are 1 char strings', () => {
+      const badCall = () => graph.hasNodes(A, B, {});
       expect(badCall).to.throw('string');
     });
 
     it('return true if graph has all input nodes', () => {
-      expect(graph.hasNodes([A, B, C])).to.equal(true);
+      expect(graph.hasNodes(A, B, C)).to.equal(true);
     });
 
-    it('return true if graph does not have all input nodes', () => {
-      expect(graph.hasNodes([A, B, F])).to.equal(false);
+    it('return false if graph does not have all input nodes', () => {
+      expect(graph.hasNodes(A, B, F)).to.equal(false);
     });
   });
 
