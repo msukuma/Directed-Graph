@@ -1,4 +1,6 @@
 node_modules/
 .DS_Store
 graph-*.txt
+time.js
+break.js
 TODO.md
