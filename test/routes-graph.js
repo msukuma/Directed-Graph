@@ -59,80 +59,92 @@ describe('RoutesGraph', () => {
   });
 
   describe('numRoutes', () => {
-    let args;
+      let args;
 
-    it('exists', () => {
-      expect(graph.numRoutes).to.be.a('function');
-    });
-
-    describe('_maxStops', () => {
       it('exists', () => {
-        expect(graph._maxStops).to.be.a('function');
+        expect(graph.numRoutes).to.be.a('function');
       });
 
-      it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3 }`, () => {
-        args = { from: C, to: C, maxStops: 3 };
-        expect(graph.numRoutes(args)).to.equal(2);
+      describe('_maxStops', () => {
+        it('exists', () => {
+          expect(graph._maxStops).to.be.a('function');
+        });
+
+        it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3 }`, () => {
+          args = { from: C, to: C, maxStops: 3, showRoutes: true };
+          expect(graph.numRoutes(args)).to.equal(2);
+        });
+
       });
 
+      describe('_maxStopsRecursive', () => {
+        it('exists', () => {
+          expect(graph._maxStopsRecursive).to.be.a('function');
+        });
+
+        it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3, recursive: true }`, () => {
+          args = {
+            from: C,
+            to: C,
+            maxStops: 3,
+            recursive: true,
+            showRoutes: true,
+          };
+          expect(graph.numRoutes(args)).to.equal(2);
+        });
+
+      });
+
+      describe('_exactStops', () => {
+        it('exists', () => {
+          expect(graph._exactStops).to.be.a('function');
+        });
+
+        it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4 }`, () => {
+          args = { from: A, to: C, exactStops: 4 };
+          expect(graph.numRoutes(args)).to.equal(3);
+        });
+      });
+
+      describe('_exactStopsRecursive', () => {
+        it('exists', () => {
+          expect(graph._exactStopsRecursive).to.be.a('function');
+        });
+
+        it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4, recursive: true }`, () => {
+          args = {
+            from: A,
+            to: C,
+            exactStops: 4,
+            recursive: true,
+            showRoutes: true,
+          };
+          expect(graph.numRoutes(args)).to.equal(3);
+        });
+      });
+
+      describe('_maxDistance ', () => {
+        it('exists', () => {
+          expect(graph._maxDistance).to.be.a('function');
+        });
+
+        it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30 }`, () => {
+          args = { from: C, to: C, maxDistance: 30, showRoutes: true };
+          expect(graph.numRoutes(args)).to.equal(7);
+        });
+      });
+
+      describe('_maxDistanceRecursive ', () => {
+        it('exists', () => {
+          expect(graph._maxDistanceRecursive).to.be.a('function');
+        });
+
+        it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30, recursive: true }`, () => {
+          args = { from: C, to: C, maxDistance: 30, recursive: true };
+          expect(graph.numRoutes(args)).to.equal(7);
+        });
+      });
     });
-
-    describe('_maxStopsRecursive', () => {
-      it('exists', () => {
-        expect(graph._maxStopsRecursive).to.be.a('function');
-      });
-
-      it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3, recursive: true }`, () => {
-        args = { from: C, to: C, maxStops: 3, recursive: true };
-        expect(graph.numRoutes(args)).to.equal(2);
-      });
-
-    });
-
-    describe('_exactStops', () => {
-      it('exists', () => {
-        expect(graph._exactStops).to.be.a('function');
-      });
-
-      it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4 }`, () => {
-        args = { from: A, to: C, exactStops: 4 };
-        expect(graph.numRoutes(args)).to.equal(3);
-      });
-    });
-
-    describe('_exactStopsRecursive', () => {
-      it('exists', () => {
-        expect(graph._exactStopsRecursive).to.be.a('function');
-      });
-
-      it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4, recursive: true }`, () => {
-        args = { from: A, to: C, exactStops: 4, recursive: true };
-        expect(graph.numRoutes(args)).to.equal(3);
-      });
-    });
-
-    describe('_maxDistance ', () => {
-      it('exists', () => {
-        expect(graph._maxDistance).to.be.a('function');
-      });
-
-      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30 }`, () => {
-        args = { from: C, to: C, maxDistance: 30, showRoutes: true };
-        expect(graph.numRoutes(args)).to.equal(7);
-      });
-    });
-
-    describe('_maxDistanceRecursive ', () => {
-      it('exists', () => {
-        expect(graph._maxDistanceRecursive).to.be.a('function');
-      });
-
-      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30, recursive: true }`, () => {
-        args = { from: C, to: C, maxDistance: 30, recursive: true };
-        expect(graph.numRoutes(args)).to.equal(7);
-      });
-    });
-  });
 
   describe('shortestRoute', () => {
     it('exists', () => {
