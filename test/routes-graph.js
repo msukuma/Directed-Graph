@@ -111,6 +111,17 @@ describe('RoutesGraph', () => {
       });
     });
 
+    describe('_maxDistance ', () => {
+      it('exists', () => {
+        expect(graph._maxDistance).to.be.a('function');
+      });
+
+      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30 }`, () => {
+        args = { from: C, to: C, maxDistance: 30, showRoutes: true };
+        expect(graph.numRoutes(args)).to.equal(7);
+      });
+    });
+
     describe('_maxDistanceRecursive ', () => {
       it('exists', () => {
         expect(graph._maxDistanceRecursive).to.be.a('function');
