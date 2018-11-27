@@ -52,4 +52,14 @@ describe('Graph', () => {
     });
   });
 
+  describe('_validateNodes', () => {
+    it('throws an error if one of the input nodes does not exist', () => {
+      expect(() => { graph._validateNodes(F); }).to.throw('graph');
+    });
+
+    it('throws an error if one of the inputs is not a 1 char string', () => {
+      expect(() => { graph._validateNodes('NO'); }).to.throw('length');
+    });
+  });
+
 });
