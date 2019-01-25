@@ -4,7 +4,7 @@ const {
   isCircular,
 } = require('../lib/helpers');
 const Edge = require('../lib/edge');
-const LinkedList = require('../lib/linked-list');
+const LinkedList = require('../lib/data-structures/linked-list');
 const { A, C, D, E } = require('./test-constants');
 const { expect } = require('chai');
 
@@ -15,7 +15,7 @@ const AD = new Edge(A, D, 2);
 const DE = new Edge(D, E, 2);
 let map, route;
 
-function testRebuild() {
+function testRebuild () {
   expect(map.get(C).head.val).to.equal(AC);
   expect(map.get(D).head.val).to.equal(AD);
   expect(map.get(D).head.next.val).to.equal(CD);
