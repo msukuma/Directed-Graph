@@ -65,22 +65,22 @@ describe('RoutesGraph', () => {
       expect(graph.routes).to.be.a('function');
     });
 
-    describe('_maxStops', () => {
-      it('exists', () => {
-        expect(graph._maxStops).to.be.a('function');
-      });
+    // describe('_maxStops', () => {
+    //   it('exists', () => {
+    //     expect(graph._maxStops).to.be.a('function');
+    //   });
 
-      it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3 }`, () => {
-        args = {
-          from: C,
-          to: C,
-          maxStops: 3,
-          show: true
-        };
-        expect(graph.routes(args)).to.equal(2);
-      });
+    //   it(`should return 2 when numRoutes is called with { from: '${C}', to: '${C}', maxStops: 3 }`, () => {
+    //     args = {
+    //       from: C,
+    //       to: C,
+    //       maxStops: 3,
+    //       show: true
+    //     };
+    //     expect(graph.routes(args)).to.equal(2);
+    //   });
 
-    });
+    // });
 
     describe('_maxStopsRecursive', () => {
       it('exists', () => {
@@ -100,21 +100,21 @@ describe('RoutesGraph', () => {
 
     });
 
-    describe('_exactStops', () => {
-      it('exists', () => {
-        expect(graph._exactStops).to.be.a('function');
-      });
+    // describe('_exactStops', () => {
+    //   it('exists', () => {
+    //     expect(graph._exactStops).to.be.a('function');
+    //   });
 
-      it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4 }`, () => {
-        args = {
-          from: A,
-          to: C,
-          exactStops: 4,
-          show: true,
-        };
-        expect(graph.routes(args)).to.equal(3);
-      });
-    });
+    //   it(`should return 3 when numRoutes is called with { from: '${A}', to: '${C}', exactStops: 4 }`, () => {
+    //     args = {
+    //       from: A,
+    //       to: C,
+    //       exactStops: 4,
+    //       show: true,
+    //     };
+    //     expect(graph.routes(args)).to.equal(3);
+    //   });
+    // });
 
     describe('_exactStopsRecursive', () => {
       it('exists', () => {
@@ -133,71 +133,71 @@ describe('RoutesGraph', () => {
       });
     });
 
-    describe('_maxDistance ', () => {
-      it('exists', () => {
-        expect(graph._maxDistance).to.be.a('function');
-      });
-
-      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30 }`, () => {
-        args = {
-          from: C,
-          to: C,
-          maxDistance: 30,
-          show: true,
-        };
-        expect(graph.routes(args)).to.equal(7);
-      });
-    });
-
-    // describe('_maxDistanceRecursive ', () => {
+    // describe('_maxDistance ', () => {
     //   it('exists', () => {
-    //     expect(graph._maxDistanceRecursive).to.be.a('function');
+    //     expect(graph._maxDistance).to.be.a('function');
     //   });
 
-    //   it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30, recursive: true }`, () => {
+    //   it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30 }`, () => {
     //     args = {
     //       from: C,
     //       to: C,
     //       maxDistance: 30,
-    //       recursive: true,
     //       show: true,
     //     };
     //     expect(graph.routes(args)).to.equal(7);
     //   });
     // });
-  });
 
-  describe('shortestRoute', () => {
-    it('exists', () => {
-      expect(graph.shortestRoute).to.be.a('function');
-    });
+    describe('_maxDistanceRecursive ', () => {
+      it('exists', () => {
+        expect(graph._maxDistanceRecursive).to.be.a('function');
+      });
 
-    it('should return undefined if there is no route', () => {
-      const args = {
-        from: A,
-        to: C,
-        maxDistance: 1,
-        show: true
-      }
-      expect(graph.shortestRoute(args)).to.be.undefined;
-    });
-
-    it('should return 9 as the distance of the shortest route from A to C', () => {
-      const args = {
-        from: A,
-        to: C,
-        show: true
-      }
-      expect(graph.shortestRoute(args)).to.equal(9);
-    });
-
-    it('should return 9 as the distance of the shortest route from B to B', () => {
-      const args = {
-        from: B,
-        to: B,
-        show: true
-      }
-      expect(graph.shortestRoute(args)).to.equal(9);
+      it(`should return 7 when numRoutes is called with { from: '${C}', to: '${C}', maxDistance: 30, recursive: true }`, () => {
+        args = {
+          from: C,
+          to: C,
+          maxDistance: 30,
+          recursive: true,
+          show: true,
+        };
+        expect(graph.routes(args)).to.equal(7);
+      });
     });
   });
+
+  // describe('shortestRoute', () => {
+  //   it('exists', () => {
+  //     expect(graph.shortestRoute).to.be.a('function');
+  //   });
+
+  //   it('should return undefined if there is no route', () => {
+  //     const args = {
+  //       from: A,
+  //       to: C,
+  //       maxDistance: 1,
+  //       show: true
+  //     }
+  //     expect(graph.shortestRoute(args)).to.be.undefined;
+  //   });
+
+  //   it('should return 9 as the distance of the shortest route from A to C', () => {
+  //     const args = {
+  //       from: A,
+  //       to: C,
+  //       show: true
+  //     }
+  //     expect(graph.shortestRoute(args)).to.equal(9);
+  //   });
+
+  //   it('should return 9 as the distance of the shortest route from B to B', () => {
+  //     const args = {
+  //       from: B,
+  //       to: B,
+  //       show: true
+  //     }
+  //     expect(graph.shortestRoute(args)).to.equal(9);
+  //   });
+  // });
 });
