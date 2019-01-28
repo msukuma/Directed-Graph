@@ -172,7 +172,14 @@ describe('RoutesGraph', () => {
       expect(graph.shortestRoute).to.be.a('function');
     });
 
-    it('should return undefined if there is no route');
+    it('should return undefined if there is no route', () => {
+      const args = {
+        from: A,
+        to: F,
+        show: true
+      }
+      expect(graph.shortestRoute(args)).to.be.undefined;
+    });
 
     it('should return 9 as the distance of the shortest route from A to C', () => {
       const args = {
