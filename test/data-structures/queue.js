@@ -4,7 +4,7 @@ const { expect } = require('chai');
 
 describe('Queue', () => {
   let q;
-  beforeEach(() => { q = new Queue(); });
+  before(() => { q = new Queue(); });
 
   describe('constructor', () => {
     it('should create a Queue instance', () => {
