@@ -175,7 +175,8 @@ describe('RoutesGraph', () => {
     it('should return undefined if there is no route', () => {
       const args = {
         from: A,
-        to: F,
+        to: C,
+        maxDistance: 1,
         show: true
       }
       expect(graph.shortestRoute(args)).to.be.undefined;
