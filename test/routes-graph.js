@@ -62,7 +62,7 @@ describe('RoutesGraph', () => {
     let args;
 
     it('exists', () => {
-      expect(graph.numRoutes).to.be.a('function');
+      expect(graph.routes).to.be.a('function');
     });
 
     describe('_maxStops', () => {
@@ -77,7 +77,7 @@ describe('RoutesGraph', () => {
           maxStops: 3,
           show: true
         };
-        expect(graph.numRoutes(args)).to.equal(2);
+        expect(graph.routes(args)).to.equal(2);
       });
 
     });
@@ -95,7 +95,7 @@ describe('RoutesGraph', () => {
           recursive: true,
           show: true,
         };
-        expect(graph.numRoutes(args)).to.equal(2);
+        expect(graph.routes(args)).to.equal(2);
       });
 
     });
@@ -112,7 +112,7 @@ describe('RoutesGraph', () => {
           exactStops: 4,
           show: true,
         };
-        expect(graph.numRoutes(args)).to.equal(3);
+        expect(graph.routes(args)).to.equal(3);
       });
     });
 
@@ -129,7 +129,7 @@ describe('RoutesGraph', () => {
           recursive: true,
           show: true,
         };
-        expect(graph.numRoutes(args)).to.equal(3);
+        expect(graph.routes(args)).to.equal(3);
       });
     });
 
@@ -145,7 +145,7 @@ describe('RoutesGraph', () => {
           maxDistance: 30,
           show: true,
         };
-        expect(graph.numRoutes(args)).to.equal(7);
+        expect(graph.routes(args)).to.equal(7);
       });
     });
 
@@ -162,7 +162,7 @@ describe('RoutesGraph', () => {
     //       recursive: true,
     //       show: true,
     //     };
-    //     expect(graph.numRoutes(args)).to.equal(7);
+    //     expect(graph.routes(args)).to.equal(7);
     //   });
     // });
   });
