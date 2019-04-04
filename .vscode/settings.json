@@ -1,2 +1,16 @@
 {
+  "python.unitTest.unittestArgs": [
+    "-v",
+    "-s",
+    "./lib",
+    "-p",
+    "*test.py"
+  ],
+  "python.unitTest.pyTestEnabled": false,
+  "python.unitTest.nosetestsEnabled": false,
+  "python.unitTest.unittestEnabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.pep8Enabled": false,
+  "python.linting.enabled": true,
+  "python.linting.flake8Enabled": true
 }
